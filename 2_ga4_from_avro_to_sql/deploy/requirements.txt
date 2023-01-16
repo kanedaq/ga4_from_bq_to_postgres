@@ -1,0 +1,2 @@
+fastavro
+psycopg2-binary
