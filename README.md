@@ -1,4 +1,8 @@
-# ga4_from_bq_to_postgres
+GA4のテーブルをBigQueryからPostgreSQLにAvroファイル経由でコピーする<br>
+https://qiita.com/kanedaq/items/c3b471b6d0d73c46392b
+
+
+# 実行手順
 
 ## (1) ga4_from_bq_to_avro
 
@@ -11,7 +15,10 @@ docker build ./ -t ga4_from_bq_to_avro
 
 ### run
 
-- ga4_from_bq_to_avro.ini を実行ディレクトリにコピーして編集
+- Google Cloudのサービスアカウントファイルを service_account.json の名前で実行ディレクトリにコピーする。<br>
+  サービスアカウントファイルについて：https://cloud.google.com/docs/authentication/production?hl=ja
+- ga4_from_bq_to_avro.ini を実行ディレクトリにコピーして編集する。
+- 以下を参考にして docker run を実行する。
 
 ```sh
 docker run --mount type=bind,source="$(pwd)",target=/workdir ga4_from_bq_to_avro
@@ -28,7 +35,8 @@ docker build ./ -t ga4_from_avro_to_sql
 
 ### run
 
-- ga4_from_avro_to_sql.ini を実行ディレクトリにコピーして編集
+- ga4_from_avro_to_sql.ini を実行ディレクトリにコピーして編集する。
+- 以下を参考にして docker run を実行する。
 
 ```sh
 docker run --mount type=bind,source="$(pwd)",target=/workdir ga4_from_avro_to_sql
@@ -45,8 +53,9 @@ docker build ./ -t ga4_from_sql_to_postgres
 
 ### run
 
-- ga4_from_sql_to_postgres.ini を実行ディレクトリにコピーして編集
+- ga4_from_sql_to_postgres.ini を実行ディレクトリにコピーして編集する。
+- 以下を参考にして docker run を実行する。
 
 ```sh
-docker run --mount type=bind,source="$(pwd)",target=/workdir 3_ga4_from_sql_to_postgres
+docker run --add-host=host.docker.internal:host-gateway --mount type=bind,source="$(pwd)",target=/workdir ga4_from_sql_to_postgres
 ```

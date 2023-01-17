@@ -18,6 +18,8 @@ RUN mkdir -p /script /workdir
 WORKDIR /workdir
 VOLUME ["/workdir"]
 
+ENV GOOGLE_APPLICATION_CREDENTIALS /workdir/service_account.json
+
 COPY ./deploy/* /script/
 RUN pip install --no-cache-dir -r /script/requirements.txt
 CMD [ "python", "/script/ga4_from_bq_to_avro.py" ]
